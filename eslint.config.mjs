@@ -1,10 +1,22 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import prettier from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
+import tailwind from "eslint-plugin-tailwindcss"
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    rules: {
+      "react/no-unescaped-entities": "off",
+      "prettier/prettier": "error",
+    },
+  },
+  {
+    extends: [tailwind.configs.recommended]
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
@@ -16,3 +28,5 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
+
+
