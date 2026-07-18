@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
-import { Source_Sans_3 as FontSans, Geist } from "next/font/google";
+import { Source_Sans_3 as FontSans, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
+const fontDisplay = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+});
+const fontDocMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-doc-mono",
+  weight: ["400", "500"],
+});
 
 export const metadata: Metadata = {
   title: "Snapread — AI-Powered Visual PDF Summaries",
@@ -23,8 +36,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${geist.variable} antialiased`}>{children}</body>
+    <html lang="en">
+      <body
+        className={`font-sans ${fontSans.variable} ${fontDisplay.variable} ${fontDocMono.variable} antialiased`}
+      >
+        <div className="relative flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

@@ -1,11 +1,23 @@
+import BgGradient from "@/components/common/bg-gradient";
+import CTASection from "@/components/home/cta-section";
+import DemoSection from "@/components/home/demo-section";
+import HeroSection from "@/components/home/hero-section";
+import HowItWorksSection from "@/components/home/how-it-works-section";
+import PricingSection from "@/components/home/pricing-section";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col  flex-1 items-center justify-center bg-zinc-50 dark:bg-black">
-      <h1>snapread</h1>
-      <Button variant={"outline"} size={'lg'}>Hello world</Button>
+    <div className="relative w-full">
+      <BgGradient/>
+      <div className="flex flex-col">
+        <HeroSection />
+      </div>
+      <DemoSection/>
+      <HowItWorksSection/>
+      <PricingSection/>
+      <CTASection/>
     </div>
   );
 }
