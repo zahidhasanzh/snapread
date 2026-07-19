@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import NavLink from "./nav-link";
+import { Show, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
-  const isLoggedIn = false;
   return (
     <nav className="container relative z-20 flex items-center justify-between py-5 lg:px-8 px-4 mx-auto">
       <div className="flex lg:flex-1">
@@ -22,20 +22,22 @@ const Header = () => {
       <div className="flex lg:justify-center gap-4 lg:gap-12 lg:items-center">
         <NavLink href="/#pricing">Pricing</NavLink>
         <NavLink href="/#how-it-works">How it works</NavLink>
-        {isLoggedIn && <NavLink href="/#dashboard">Your Summaries</NavLink>}
+        <Show when="signed-in">
+          <NavLink href="/dashboard">Your Summaries</NavLink>
+        </Show>
       </div>
       <div className="flex lg:justify-end lg:flex-1">
-        {isLoggedIn ? (
+        <Show when="signed-in">
           <div className="flex gap-2 items-center">
-            <NavLink href="/#sign-in">Upload a PDF</NavLink>
+            <NavLink href="/upload">Upload a PDF</NavLink>
             <div>Pro</div>
-            <Button>User</Button>
+              <UserButton />
           </div>
-        ) : (
-          <div>
-            <NavLink href="/sign-in">Sign in</NavLink>
-          </div>
-        )}
+        </Show>
+
+        <Show when="signed-out">
+          <NavLink href="/sign-in">Sign in</NavLink>
+        </Show>
       </div>
     </nav>
   );

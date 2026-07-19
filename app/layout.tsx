@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Source_Sans_3 as FontSans, Fraunces, JetBrains_Mono } from "next/font/google";
+import {
+  Source_Sans_3 as FontSans,
+  Fraunces,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 const fontDisplay = Fraunces({
@@ -41,8 +46,11 @@ export default function RootLayout({
         className={`font-sans ${fontSans.variable} ${fontDisplay.variable} ${fontDocMono.variable} antialiased`}
       >
         <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
+          <ClerkProvider>
+            <Header />
+
+            <main className="flex-1">{children}</main>
+          </ClerkProvider>
           <Footer />
         </div>
       </body>
