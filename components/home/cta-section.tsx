@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import Reveal from "@/components/common/reveal";
+import { Button } from "@/components/ui/button";
 
 const CTASection = () => {
   return (

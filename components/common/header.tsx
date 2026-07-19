@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import NavLink from "./nav-link";
 import { Show, UserButton } from "@clerk/nextjs";
+import NavLink from "@/components/common/nav-link";
 
 const Header = () => {
   return (
@@ -21,7 +21,7 @@ const Header = () => {
       </div>
       <div className="flex lg:justify-center gap-4 lg:gap-12 lg:items-center">
         <NavLink href="/#pricing">Pricing</NavLink>
-        <NavLink href="/#how-it-works">How it works</NavLink>
+        {/* <NavLink href="/#how-it-works">How it works</NavLink> */}
         <Show when="signed-in">
           <NavLink href="/dashboard">Your Summaries</NavLink>
         </Show>
