@@ -1,8 +1,12 @@
 "use client";
-import UploadFormInput from "@/components/upload/upload-form-input";
-import Reveal from "@/components/common/reveal";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { z } from "zod";
+import { toast } from "sonner";
+
+import Reveal from "@/components/common/reveal";
+import UploadFormInput from "@/components/upload/upload-form-input";
+import { useUploadThing } from "@/utils/uploadthing";
 
 const schema = z.object({
   file: z
@@ -21,43 +25,94 @@ const UploadForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { startUpload } = useUploadThing("pdfUploader", {
+    onUploadBegin: (fileName) => {
+      console.log("Upload has begun for:", fileName);
+    },
+
+    onClientUploadComplete: (res) => {
+      console.log("Upload completed:", res);
+    },
+
+    onUploadError: (err) => {
+      console.error(err);
+
+      toast.error("Error occurred while uploading", {
+        description: err.message,
+      });
+
+      setIsLoading(false);
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submited");
+
     setError(null);
 
     const formData = new FormData(e.currentTarget);
     const file = formData.get("file") as File;
 
-    // validating the fields
+    // Validate
     const validatedFields = schema.safeParse({ file });
-    console.log(validatedFields);
 
     if (!validatedFields.success) {
       const flattened = z.flattenError(validatedFields.error);
-      setError(flattened.fieldErrors.file?.[0] ?? "Invalid file");
+
+      toast.error("❌ Something went wrong", {
+        description: flattened.fieldErrors.file?.[0] ?? "Invalid file",
+      });
+
       return;
     }
 
     setIsLoading(true);
 
-    // schema with zod
-    // upload the file to uploading
-    // parse the pdf using lang chain
-    // summarize the summary to the database
-    // save the summary to the database
-    // redirect to the {id} summary page
-  };
+    // Create ONE loading toast
+    const toastId = toast.loading("📃 Uploading PDF", {
+      description: "We are uploading your PDF...",
+    });
 
-  useEffect(() => {
-    if (!isLoading) return;
+    try {
+      const resp = await startUpload([file]);
 
-    const timer = setTimeout(() => {
+      if (!resp) {
+        toast.error("Upload failed", {
+          id: toastId,
+          description: "Please try again with a different file.",
+        });
+
+        return;
+      }
+
+      // Update same toast
+      toast.loading("📃 Processing PDF", {
+        id: toastId,
+        description: "Hang tight! Our AI is reading your document ✨",
+      });
+
+      // ---------------------------------------
+      // Parse PDF
+      // LangChain
+      // Save summary
+      // Save database
+      // ---------------------------------------
+
+      // Demo success
+      toast.success("PDF processed successfully!", {
+        id: toastId,
+        description: "Your summary is ready.",
+      });
+    } catch (err) {
+      toast.error("Something went wrong", {
+        id: toastId,
+        description:
+          err instanceof Error ? err.message : "Unexpected error occurred.",
+      });
+    } finally {
       setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [isLoading]);
+    }
+  };
 
   return (
     <Reveal className="w-full max-w-2xl mx-auto" delay={150}>
