@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 
 import Reveal from "@/components/common/reveal";
 import UploadFormInput from "@/components/upload/upload-form-input";
 import { useUploadThing } from "@/utils/uploadthing";
+import { generatePdfSummary } from "@/action/upload-action";
 
 const schema = z.object({
   file: z
@@ -24,6 +25,7 @@ const schema = z.object({
 const UploadForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const { startUpload } = useUploadThing("pdfUploader", {
     onUploadBegin: (fileName) => {
@@ -47,70 +49,78 @@ const UploadForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    setError(null);
-
-    const formData = new FormData(e.currentTarget);
-    const file = formData.get("file") as File;
-
-    // Validate
-    const validatedFields = schema.safeParse({ file });
-
-    if (!validatedFields.success) {
-      const flattened = z.flattenError(validatedFields.error);
-
-      toast.error("❌ Something went wrong", {
-        description: flattened.fieldErrors.file?.[0] ?? "Invalid file",
-      });
-
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Create ONE loading toast
-    const toastId = toast.loading("📃 Uploading PDF", {
-      description: "We are uploading your PDF...",
-    });
-
     try {
-      const resp = await startUpload([file]);
 
-      if (!resp) {
-        toast.error("Upload failed", {
-          id: toastId,
-          description: "Please try again with a different file.",
+      setIsLoading(true);
+      setError(null);
+
+      const formData = new FormData(e.currentTarget);
+      const file = formData.get("file") as File;
+
+      const validatedFields = schema.safeParse({ file });
+
+      if (!validatedFields.success) {
+        const flattened = z.flattenError(validatedFields.error);
+
+        toast.error("❌ Something went wrong", {
+          description: flattened.fieldErrors.file?.[0] ?? "Invalid file",
         });
-
+        setIsLoading(false)
         return;
       }
 
-      // Update same toast
-      toast.loading("📃 Processing PDF", {
-        id: toastId,
-        description: "Hang tight! Our AI is reading your document ✨",
+      const toastId = toast.loading("📃 Uploading PDF", {
+        description: "We are uploading your PDF...",
       });
 
-      // ---------------------------------------
-      // Parse PDF
-      // LangChain
-      // Save summary
-      // Save database
-      // ---------------------------------------
+      try {
+        const resp = await startUpload([file]);
 
-      // Demo success
-      toast.success("PDF processed successfully!", {
-        id: toastId,
-        description: "Your summary is ready.",
-      });
-    } catch (err) {
-      toast.error("Something went wrong", {
-        id: toastId,
-        description:
-          err instanceof Error ? err.message : "Unexpected error occurred.",
-      });
-    } finally {
-      setIsLoading(false);
+        if (!resp) {
+          toast.error("Upload failed", {
+            id: toastId,
+            description: "Please try again with a different file.",
+          });
+          setIsLoading(false)
+          return;
+        }
+
+        toast.loading("📃 Processing PDF", {
+          id: toastId,
+          description: "Hang tight! Our AI is reading your document! ✨",
+        });
+
+        // Parse the pdf using lang chain
+        const result = await generatePdfSummary(resp);
+        const { data = null, message = null } = result || {};
+        if (data) {
+          toast.loading("📃 Saving PDF...", {
+            id: toastId,
+            description: "Hang tight! We are saving your summary! ✨",
+          });
+          formRef.current?.reset();
+          // if (data.summary) {
+          //   //save summary to the database
+          // }
+        }
+
+        toast.success("PDF processed successfully!", {
+          id: toastId,
+          description: "Your summary is ready.",
+        });
+      } catch (err) {
+        setIsLoading(false)
+        toast.error("Something went wrong", {
+          id: toastId,
+          description:
+            err instanceof Error ? err.message : "Unexpected error occurred.",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error occurred", error);
+      formRef.current?.reset();
     }
   };
 
@@ -121,6 +131,7 @@ const UploadForm = () => {
           onSubmit={handleSubmit}
           error={error}
           isLoading={isLoading}
+          ref={formRef}
         />
       </div>
     </Reveal>
