@@ -7,7 +7,10 @@ import { toast } from "sonner";
 import Reveal from "@/components/common/reveal";
 import UploadFormInput from "@/components/upload/upload-form-input";
 import { useUploadThing } from "@/utils/uploadthing";
-import { generatePdfSummary } from "@/action/upload-action";
+import {
+  generatePdfSummary,
+  storePdfSummaryAction,
+} from "@/action/upload-action";
 
 const schema = z.object({
   file: z
@@ -50,7 +53,6 @@ const UploadForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-
       setIsLoading(true);
       setError(null);
 
@@ -65,7 +67,7 @@ const UploadForm = () => {
         toast.error("❌ Something went wrong", {
           description: flattened.fieldErrors.file?.[0] ?? "Invalid file",
         });
-        setIsLoading(false)
+        setIsLoading(false);
         return;
       }
 
@@ -81,7 +83,7 @@ const UploadForm = () => {
             id: toastId,
             description: "Please try again with a different file.",
           });
-          setIsLoading(false)
+          setIsLoading(false);
           return;
         }
 
@@ -94,14 +96,26 @@ const UploadForm = () => {
         const result = await generatePdfSummary(resp);
         const { data = null, message = null } = result || {};
         if (data) {
+          let storeResult: any;
           toast.loading("📃 Saving PDF...", {
             id: toastId,
             description: "Hang tight! We are saving your summary! ✨",
           });
-          formRef.current?.reset();
-          // if (data.summary) {
-          //   //save summary to the database
-          // }
+
+          if (data.summary) {
+            storeResult = await storePdfSummaryAction({
+              summary: data.summary,
+              fileUrl: resp[0].serverData.url,
+              title: data.title,
+              fileName: file.name,
+            });
+            // save the summary to the database
+            toast.success("Summary Generated! 🎉", {
+              description:
+                "Your PDF has been summarized and saved successfully.",
+            });
+            formRef.current?.reset();
+          }
         }
 
         toast.success("PDF processed successfully!", {
@@ -109,7 +123,7 @@ const UploadForm = () => {
           description: "Your summary is ready.",
         });
       } catch (err) {
-        setIsLoading(false)
+        setIsLoading(false);
         toast.error("Something went wrong", {
           id: toastId,
           description:

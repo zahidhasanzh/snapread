@@ -18,7 +18,15 @@ export async function generateSummaryFromGroqAi(pdfText: string) {
       ),
     ]);
 
-    return response.content;
+     const summaryText =
+      typeof response.content === "string"
+        ? response.content
+        : response.content
+            .map((block) => ("text" in block ? block.text : ""))
+            .join("\n");
+
+    return summaryText;
+
   } catch (error: any) {
     if (error?.status === 429) {
       throw new Error("RATE_LIMIT_EXCEEDED");
