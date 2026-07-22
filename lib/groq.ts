@@ -9,7 +9,7 @@ const ai = new ChatGroq({
    maxTokens: 1500,
 });
 
-export async function generateSummaryFromGeminiAi(pdfText: string) {
+export async function generateSummaryFromGroqAi(pdfText: string) {
   try {
     const response = await ai.invoke([
       new SystemMessage(SUMMARY_SYSTEM_PROMPT),

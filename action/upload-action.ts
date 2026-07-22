@@ -1,6 +1,6 @@
 "use server";
 
-import { generateSummaryFromGeminiAi } from "@/lib/groq";
+import { generateSummaryFromGroqAi } from "@/lib/groq";
 import { fetchAndExtractPdfText } from "@/lib/langchain";
 
 export async function generatePdfSummary(
@@ -35,7 +35,7 @@ export async function generatePdfSummary(
     console.log("PDF Length:", pdfText.length);
     let summary;
     try {
-      summary = await generateSummaryFromGeminiAi(pdfText);
+      summary = await generateSummaryFromGroqAi(pdfText);
       console.log("summary", { summary });
     } catch (error) {
       console.log(error);
