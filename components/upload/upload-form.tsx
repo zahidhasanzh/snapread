@@ -11,6 +11,8 @@ import {
   generatePdfSummary,
   storePdfSummaryAction,
 } from "@/action/upload-action";
+import { useRouter } from "next/navigation";
+
 
 const schema = z.object({
   file: z
@@ -29,6 +31,7 @@ const UploadForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter()
 
   const { startUpload } = useUploadThing("pdfUploader", {
     onUploadBegin: (fileName) => {
@@ -115,13 +118,14 @@ const UploadForm = () => {
                 "Your PDF has been summarized and saved successfully.",
             });
             formRef.current?.reset();
+            router.push(`/summaries/${storeResult.data.id}`)
           }
         }
-
         toast.success("PDF processed successfully!", {
           id: toastId,
           description: "Your summary is ready.",
         });
+
       } catch (err) {
         setIsLoading(false);
         toast.error("Something went wrong", {

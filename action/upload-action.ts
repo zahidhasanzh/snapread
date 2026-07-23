@@ -5,6 +5,7 @@ import { generateSummaryFromGroqAi } from "@/lib/groq";
 import { fetchAndExtractPdfText } from "@/lib/langchain";
 import { formatFileNameAsTitle } from "@/utils/format-utils";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 interface PdfSummaryType {
   userId?: string;
@@ -60,7 +61,7 @@ export async function generatePdfSummary(
         data: null,
       };
     }
-    const formattedFileName = formatFileNameAsTitle(fileName)
+    const formattedFileName = formatFileNameAsTitle(fileName);
     return {
       success: true,
       message: "Summary generated successfully",
@@ -110,11 +111,8 @@ export async function storePdfSummaryAction({
   title,
   fileName,
 }: PdfSummaryType) {
-  // user is logged in and has a userId
-  // savepdf summary
-  // savePdfSummary()
 
-  let savedSummary: any
+  let savedSummary: any;
 
   try {
     const { userId } = await auth();
@@ -131,15 +129,11 @@ export async function storePdfSummaryAction({
       title,
       fileName,
     });
-    if(!savedSummary){
+    if (!savedSummary) {
       return {
         success: false,
-        message: 'Failed to save PDF summary, please try again'
-      }
-    }
-    return {
-      success: true,
-      message: 'PDF summary saved successfully'
+        message: "Failed to save PDF summary, please try again...",
+      };
     }
   } catch (error) {
     return {
@@ -148,4 +142,15 @@ export async function storePdfSummaryAction({
         error instanceof Error ? error.message : "Error saving PDF summary",
     };
   }
+
+  //Revalidate our cache
+  revalidatePath(`/summaries/${savedSummary.id}`);
+
+  return {
+    success: true,
+    message: "PDF summary saved successfully",
+    data: {
+      id: savedSummary.id,
+    },
+  };
 }
