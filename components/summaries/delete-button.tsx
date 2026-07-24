@@ -51,7 +51,7 @@ export default function DeleteButton({
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-400 cursor-pointer bg-gray-50 border border-gray-200 hover:text-rose-600 hover:bg-rose-50"
+            className="text-[var(--ink-soft)] cursor-pointer bg-[var(--paper)] border border-[var(--border)] hover:text-[var(--flag)] hover:bg-[color-mix(in_oklch,var(--flag),white_88%)]"
           >
             <Trash2 className="w-4 h-4" />
           </Button>
@@ -60,9 +60,9 @@ export default function DeleteButton({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Summary</DialogTitle>
+          <DialogTitle className="font-display">Delete Summary</DialogTitle>
 
-          <DialogDescription>
+          <DialogDescription className="text-[var(--ink-soft)]">
             Are you sure you want to delete this summary? This action
             cannot be undone.
           </DialogDescription>
@@ -73,7 +73,7 @@ export default function DeleteButton({
             render={
               <Button
                 variant="ghost"
-                className="bg-gray-50 border cursor-pointer border-gray-200 hover:text-gray-600 hover:bg-gray-100"
+                className="bg-[var(--paper)] border cursor-pointer border-[var(--border)] text-[var(--ink)] hover:bg-[var(--secondary)]"
               >
                 Cancel
               </Button>
@@ -82,7 +82,7 @@ export default function DeleteButton({
 
           <Button
             variant="destructive"
-            className="bg-gray-900 hover:bg-gray-700 cursor-pointer"
+            className="bg-[var(--flag)] hover:bg-[var(--flag)]/85 text-[var(--paper-card)] cursor-pointer"
             disabled={isPending}
             onClick={handleDelete}
           >
