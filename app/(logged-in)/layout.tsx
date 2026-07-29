@@ -1,10 +1,11 @@
 import UpgradeRequired from "@/components/common/upgrade-required";
-import { getSubscriptionStatus, hasActivePlan } from "@/lib/user";
-import { currentUser } from "@clerk/nextjs/server";
+import {hasActivePlan } from "@/lib/user";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export const Layout = async ({ children }: { children: React.ReactNode }) => {
+  await auth.protect()
   const user = await currentUser();
   if (!user) {
     redirect("/sign-in");
