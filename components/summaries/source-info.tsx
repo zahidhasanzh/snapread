@@ -23,6 +23,7 @@ const SourceInfo = ({
       </div>
       <div className="flex gap-2">
         <Button
+          nativeButton={false}
           variant={"ghost"}
           size={"sm"}
           className="h-8 px-3 text-[var(--ink-soft)] hover:text-[var(--marigold-dark)] hover:bg-[var(--paper-card)]"
