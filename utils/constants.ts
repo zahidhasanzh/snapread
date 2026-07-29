@@ -1,34 +1,69 @@
-import type {Variants} from 'motion/react'
+ import type {Variants} from 'motion/react'
 
-export const pricingPlans = [
+import { PriceType } from "@/types";
+import { isDev } from "@/utils/helper";
+
+export const pricingPlans: PriceType[] = [
   {
+    id: "basic",
     name: "Basic",
-    price: 49,
-    description: "Perfect for occasional use",
+    price: 9,
+    description: "Perfect for students and casual readers.",
     items: [
-      "5 PDF summaries per month",
-      "Standard processing speed",
+      "5 AI summaries per month",
+      "Visual PDF summaries",
+      "Standard export",
       "Email support",
     ],
-    id: "basic",
-    paymentLink:  "https://buy.stripe.com/test_3cscMQcF8548gz6cMM",
-    priceId:  "price_1RA9yVCTlpmJdURCo5eDA5T5",
+    paymentLink: isDev
+      ? "https://buy.stripe.com/test_3cI00k5vmet35KH7Bt9ws00" : "",
+    priceID:
+      process.env.NODE_ENV === "development"
+        ? "price_1TxVsSJlEeSDaH8jl1BS2zkZ"
+        : "",
   },
   {
-    name: "Pro",
-    price: 129,
-    description: "For professionals and teams",
-    items: [
-      "Unlimited PDF summaries",
-      "Priority processing",
-      "24/7 priority support",
-      "Markdown Export",
-    ],
     id: "pro",
-    paymentLink: "https://buy.stripe.com/test_28o7sw7kO7cg6Yw7st",
-    priceId:  "price_1RA9yVCTlpmJdURCk8Oi1pwO",
+    name: "Pro",
+    price: 19,
+    description: "Best for professionals who summarize PDFs every day.",
+    items: [
+      "Unlimited AI summaries",
+      "Visual & markdown export",
+      "Priority processing",
+      "Premium templates",
+      "Priority support",
+    ],
+    paymentLink: isDev
+      ? "https://buy.stripe.com/test_cNi5kEbTKet36OL2h99ws01" : "",
+    priceID:
+      process.env.NODE_ENV === "development"
+        ? "price_1TxVsSJlEeSDaH8jLgaFovFq"
+        : "",
+  },
+  {
+    id: "business",
+    name: "Business",
+    price: 49,
+    description: "Built for teams and organizations.",
+    items: [
+      "Everything in Pro",
+      "Team collaboration",
+      "Shared workspace",
+      "Admin dashboard",
+      "24/7 Premium support",
+      "Early access to new AI features",
+    ],
+    paymentLink: isDev
+      ? "https://buy.stripe.com/test_28E00kga00Cd1urdZR9ws02" : "",
+    priceID:
+      process.env.NODE_ENV === "development"
+        ? "price_1TxVsSJlEeSDaH8jBRuxilW8"
+        : "",
   },
 ];
+
+
 
 export const containerVariants: Variants = {
   hidden: { opacity: 0 },

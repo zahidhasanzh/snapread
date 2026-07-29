@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Show, UserButton } from "@clerk/nextjs";
 import NavLink from "@/components/common/nav-link";
+import PlanBadge from "@/components/common/plan-badge";
 
 const Header = () => {
   return (
@@ -30,7 +31,7 @@ const Header = () => {
         <Show when="signed-in">
           <div className="flex gap-2 items-center">
             <NavLink href="/upload">Upload a PDF</NavLink>
-            <div>Pro</div>
+              <PlanBadge/>
               <UserButton />
           </div>
         </Show>

@@ -2,64 +2,9 @@ import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Reveal from "@/components/common/reveal";
+import { PriceType } from "@/types";
+import { pricingPlans } from "@/utils/constants";
 
-type PriceType = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  items: string[];
-  paymentLink: string;
-  priceID: string;
-};
-
-const plans: PriceType[] = [
-  {
-    id: "basic",
-    name: "Basic",
-    price: 9,
-    description: "Perfect for students and casual readers.",
-    items: [
-      "5 AI summaries per month",
-      "Visual PDF summaries",
-      "Standard export",
-      "Email support",
-    ],
-    paymentLink: "#",
-    priceID: "",
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    price: 19,
-    description: "Best for professionals who summarize PDFs every day.",
-    items: [
-      "Unlimited AI summaries",
-      "Visual & markdown export",
-      "Priority processing",
-      "Premium templates",
-      "Priority support",
-    ],
-    paymentLink: "#",
-    priceID: "",
-  },
-  {
-    id: "business",
-    name: "Business",
-    price: 49,
-    description: "Built for teams and organizations.",
-    items: [
-      "Everything in Pro",
-      "Team collaboration",
-      "Shared workspace",
-      "Admin dashboard",
-      "24/7 Premium support",
-      "Early access to new AI features",
-    ],
-    paymentLink: "#",
-    priceID: "",
-  },
-];
 
 const PricingCard = ({
   id,
@@ -78,7 +23,7 @@ const PricingCard = ({
         "hover:shadow-xl",
         isPopular
           ? "border-[var(--marigold-dark)] shadow-xl lg:scale-105"
-          : "border-[var(--border)] shadow-sm hover:border-[var(--marigold-dark)]/60"
+          : "border-[var(--border)] shadow-sm hover:border-[var(--marigold-dark)]/60",
       )}
     >
       {/* punch holes, like a library catalog card */}
@@ -93,7 +38,9 @@ const PricingCard = ({
 
       {/* Plan */}
       <div className="text-center">
-        <h3 className="text-xl font-semibold font-sans text-[var(--ink)]">{name}</h3>
+        <h3 className="text-xl font-semibold font-sans text-[var(--ink)]">
+          {name}
+        </h3>
 
         <p className="mt-3 text-sm leading-6 text-[var(--ink-soft)]">
           {description}
@@ -106,9 +53,7 @@ const PricingCard = ({
           ${price}
         </span>
 
-        <span className="mb-1 ml-2 text-sm text-[var(--ink-soft)]">
-          /month
-        </span>
+        <span className="mb-1 ml-2 text-sm text-[var(--ink-soft)]">/month</span>
       </div>
 
       {/* Features */}
@@ -120,9 +65,7 @@ const PricingCard = ({
               className="mt-0.5 shrink-0 text-[var(--teal)]"
             />
 
-            <span className="text-sm text-[var(--ink-soft)]">
-              {item}
-            </span>
+            <span className="text-sm text-[var(--ink-soft)]">{item}</span>
           </li>
         ))}
       </ul>
@@ -134,10 +77,10 @@ const PricingCard = ({
           "mt-8 flex h-12 w-full items-center justify-center rounded-md font-medium transition-all duration-300",
           isPopular
             ? "bg-[var(--ink)] text-[var(--paper-card)] hover:bg-[var(--ink)]/90"
-            : "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--paper)]"
+            : "border border-[var(--border)] text-[var(--ink)] hover:bg-[var(--paper)]",
         )}
       >
-        {isPopular ? "Start free trial" : "Get started"}
+        Get started
       </Link>
     </div>
   );
@@ -156,9 +99,7 @@ const PricingSection = () => {
             Pricing
           </span>
 
-          <h2 className="mt-4 text-4xl lg:text-5xl">
-            Pick your reading pace
-          </h2>
+          <h2 className="mt-4 text-4xl lg:text-5xl">Pick your reading pace</h2>
 
           <p className="mt-5 text-lg text-[var(--ink-soft)]">
             Choose the plan that fits your workflow. Upgrade anytime as your
@@ -168,7 +109,7 @@ const PricingSection = () => {
 
         {/* Cards */}
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {plans.map((plan, i) => (
+          {pricingPlans.map((plan, i) => (
             <Reveal key={plan.id} delay={i * 100}>
               <PricingCard {...plan} />
             </Reveal>
@@ -187,5 +128,3 @@ const PricingSection = () => {
 };
 
 export default PricingSection;
-
-
