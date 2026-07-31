@@ -24,13 +24,11 @@ export function NavigationControls({
           onClick={onPrevious}
           disabled={currentSection === 0}
           className={cn(
-            "group rounded-full w-9 h-9 sm:w-11 sm:h-11 shrink-0 transition-all duration-200 bg-[var(--ink)] text-[var(--paper-card)] border border-[var(--ink)]",
-            currentSection === 0
-              ? "opacity-40"
-              : "hover:bg-[var(--ink)]/90 hover:-rotate-12"
+            "group/nav rounded-full w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-[var(--ink)] text-[var(--paper-card)] border border-[var(--ink)] hover:bg-[var(--ink)]",
+            currentSection === 0 && "opacity-40"
           )}
         >
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:-translate-x-0.5" />
+          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200 group-hover/nav:text-[var(--marigold)]" />
         </Button>
 
         <div className="flex gap-1.5 overflow-x-auto themed-scrollbar px-1 py-1.5">
@@ -57,13 +55,11 @@ export function NavigationControls({
           onClick={onNext}
           disabled={currentSection === totalSections - 1}
           className={cn(
-            "group rounded-full w-9 h-9 sm:w-11 sm:h-11 shrink-0 transition-all duration-200 bg-[var(--ink)] text-[var(--paper-card)] border border-[var(--ink)]",
-            currentSection === totalSections - 1
-              ? "opacity-40"
-              : "hover:bg-[var(--ink)]/90 hover:rotate-12"
+            "group/nav rounded-full w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-[var(--ink)] text-[var(--paper-card)] border border-[var(--ink)] hover:bg-[var(--ink)]",
+            currentSection === totalSections - 1 && "opacity-40"
           )}
         >
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-0.5" />
+          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200 group-hover/nav:text-[var(--marigold)]" />
         </Button>
       </div>
     </div>

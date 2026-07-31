@@ -46,8 +46,6 @@ export function SummaryViewer({ summary }: { summary: string }) {
 
   return (
     <div className="relative w-full xl:w-[600px]">
-      {/* two card silhouettes peeking out behind, like the rest of the deck
-          waiting to be swiped through — echoes the homepage's card stack */}
       <div
         aria-hidden="true"
         className="absolute inset-0 rounded-3xl bg-[var(--paper-card)] border border-[var(--border)] rotate-[-4deg] translate-y-2"
