@@ -10,6 +10,7 @@ import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import { ORIGINAL_URL } from "@/utils/helper";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 const fontDisplay = Fraunces({
@@ -34,6 +35,22 @@ export const metadata: Metadata = {
     "document to visual",
     "study tool",
   ],
+  openGraph: {
+    title: "Snapread",
+    description:
+      "Skim any PDF in seconds — visual summaries you can actually get through.",
+    images: ["/og-image.png"],
+    url: ORIGINAL_URL,
+    siteName: "Snapread",
+  },
+  metadataBase: new URL(ORIGINAL_URL),
+  alternates: {
+    canonical: ORIGINAL_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -57,9 +74,8 @@ export default function RootLayout({
           toastOptions={{
             classNames: {
               success: "bg-emerald-600 text-white border-emerald-700",
-              description: "!text-gray-600"
+              description: "!text-gray-600",
             },
-            
           }}
         />
       </body>
