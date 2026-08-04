@@ -20,9 +20,10 @@ const SectionTitle = ({
   return (
     <div className="flex flex-col gap-3 mb-6 sticky top-0 pt-2 pb-4 bg-[var(--paper-card)] border-b border-[var(--border)] z-10">
       <span className="font-doc-mono text-xs tracking-widest uppercase text-[var(--marigold-dark)] text-center">
-        Card {String(index + 1).padStart(2, "0")} of {String(total).padStart(2, "0")}
+        Card {String(index + 1).padStart(2, "0")} of{" "}
+        {String(total).padStart(2, "0")}
       </span>
-      <div className="font-display text-3xl lg:text-4xl text-[var(--ink)] text-center flex items-center justify-center gap-2">
+      <div className="summary-card-title font-display text-[22px] sm:text-3xl lg:text-4xl leading-[1.25] sm:leading-tight  px-2 sm:px-4 py-1 sm:py-2 text-[var(--ink)] text-center flex items-center justify-center gap-2 break-words">
         {title}
       </div>
     </div>
@@ -45,28 +46,28 @@ export function SummaryViewer({ summary }: { summary: string }) {
     .map(parseSection);
 
   return (
-    <div className="relative w-full xl:w-[600px]">
+    <div className="summary-viewer relative w-full max-w-[480px] mx-auto px-4 lg:max-w-[600px]">
       <div
         aria-hidden="true"
-        className="absolute inset-0 rounded-3xl bg-[var(--paper-card)] border border-[var(--border)] rotate-[-4deg] translate-y-2"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 rounded-3xl bg-[var(--paper-card)] border border-[var(--border)] rotate-[3deg] translate-y-1"
+        className="summary-stack summary-stack-left absolute inset-0 rounded-3xl bg-[var(--paper-card)] border border-[var(--border)] rotate-[-4deg] translate-y-2"
       />
 
-      <Card className="relative px-2 h-[500px] sm:h-[600px] lg:h-[700px] w-full overflow-hidden bg-[var(--paper-card)] shadow-2xl rounded-3xl border border-[var(--border)]">
+      <div
+        aria-hidden="true"
+        className="summary-stack summary-stack-right absolute inset-0 rounded-3xl bg-[var(--paper-card)] border border-[var(--border)] rotate-[3deg] translate-y-1"
+      />
+
+     <Card className="summary-card relative w-full px-2 h-[600px] lg:h-[700px] overflow-hidden bg-[var(--paper-card)] shadow-2xl rounded-3xl border border-[var(--border)]">
         <ProgressBar sections={sections} currentSection={currentSection} />
 
         <MotionDiv
           key={currentSection}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          exit={{ opacity: 0 }}
-          className="h-full overflow-y-auto scrollbar-hide pt-14 sm:pt-20 pb-20 sm:pb-24"
+          className="summary-scroll h-full overflow-y-auto scrollbar-hide pt-10 lg:pt-12 pb-20 lg:pb-24"
         >
-          <div className="px-4 sm:px-6">
+          <div className="summary-content px-4 sm:px-6">
             <SectionTitle
               title={sections[currentSection]?.title || ""}
               index={currentSection}

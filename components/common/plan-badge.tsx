@@ -26,10 +26,10 @@ const PlanBadge = async () => {
   return (
     <Badge
       variant={"outline"}
-      className={cn(
-        "py-3 ml-2 bg-linear-to-r from-amber-100 to-amber-200 border-amber-300 hidden lg:flex flex-row items-center",
-        !priceId && "from-red-100 to-red-200 border-red-300",
-      )}
+     className={cn(
+  "py-3 sm:py-3 ml-2 bg-linear-to-r from-amber-100 to-amber-200 border-amber-300 flex flex-row items-center",
+  !priceId && "from-red-100 to-red-200 border-red-300",
+)}
     >
       <Crown
         className={cn("w-3 h-3 text-amber-600", !priceId && "text-red-600")}

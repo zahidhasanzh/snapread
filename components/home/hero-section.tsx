@@ -47,7 +47,7 @@ const HeroSection = () => {
       </div>
 
       {/* Signature visual: a document page shedding highlighter marks that become a fanned stack of summary cards */}
-      <div className="relative h-[380px] sm:h-[440px] flex items-center justify-center overflow-hidden">
+      <div className="custom-hight relative h-[380px] sm:h-[440px] flex items-center justify-center overflow-hidden">
         <div className="relative w-[170px] sm:w-[250px] rotate-[-6deg] rounded-sm bg-[var(--paper-card)] border border-[var(--border)] shadow-xl p-4 sm:p-5 animate-in fade-in slide-in-from-left-4 duration-700 delay-150 fill-mode-both">
           <div className="space-y-2.5">
             <div className="h-2 w-3/4 rounded-full bg-[var(--border)]" />
@@ -75,7 +75,7 @@ const HeroSection = () => {
 
         <ArrowRight
           size={22}
-          className="mx-4 text-[var(--ink-soft)] hidden sm:block animate-in fade-in duration-700 delay-500 fill-mode-both"
+          className="mx-4 text-[var(--ink-soft)]  sm:block animate-in fade-in duration-700 delay-500 fill-mode-both"
           aria-hidden="true"
         />
 

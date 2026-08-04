@@ -12,7 +12,7 @@ const cards = [
 const DemoSection = () => {
   return (
     <section className="relative w-full bg-[var(--paper)]">
-      <div className="py-16 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-2xl mx-auto text-center mb-16">
           <span className="font-doc-mono text-xs tracking-widest uppercase text-[var(--marigold-dark)]">
             The swipe deck

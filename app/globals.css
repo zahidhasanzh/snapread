@@ -51,33 +51,33 @@
 
 :root {
   /* Reading-desk palette — signature tokens for the doc-to-cards concept */
-  --paper: #ECEFE9;
-  --paper-card: #FBFAF5;
-  --ink: #1F2421;
-  --ink-soft: #4B5450;
-  --marigold: #F5B94A;
-  --marigold-dark: #C98F2B;
-  --teal: #3E7C74;
-  --flag: #D9584B;
+  --paper: #ecefe9;
+  --paper-card: #fbfaf5;
+  --ink: #1f2421;
+  --ink-soft: #4b5450;
+  --marigold: #f5b94a;
+  --marigold-dark: #c98f2b;
+  --teal: #3e7c74;
+  --flag: #d9584b;
 
-  --background: #ECEFE9;
-  --foreground: #1F2421;
-  --card: #FBFAF5;
-  --card-foreground: #1F2421;
-  --popover: #FBFAF5;
-  --popover-foreground: #1F2421;
-  --primary: #1F2421;
-  --primary-foreground: #FBFAF5;
-  --secondary: #E3E7DD;
-  --secondary-foreground: #1F2421;
-  --muted: #E3E7DD;
-  --muted-foreground: #4B5450;
-  --accent: #F5B94A;
-  --accent-foreground: #1F2421;
+  --background: #ecefe9;
+  --foreground: #1f2421;
+  --card: #fbfaf5;
+  --card-foreground: #1f2421;
+  --popover: #fbfaf5;
+  --popover-foreground: #1f2421;
+  --primary: #1f2421;
+  --primary-foreground: #fbfaf5;
+  --secondary: #e3e7dd;
+  --secondary-foreground: #1f2421;
+  --muted: #e3e7dd;
+  --muted-foreground: #4b5450;
+  --accent: #f5b94a;
+  --accent-foreground: #1f2421;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #D6DACE;
-  --input: #D6DACE;
-  --ring: #F5B94A;
+  --border: #d6dace;
+  --input: #d6dace;
+  --ring: #f5b94a;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -284,6 +284,9 @@
   background-size: 14px 14px;
   opacity: 0.06;
 }
+.custom-display-block{
+  display: none;
+}
 
 @utility container {
   margin-inline: auto;
@@ -296,8 +299,158 @@
   }
 }
 
+/* responsive */
+@media (max-width: 1023px) {
+ .custom-hight{
+   height: 250px;
+ }
+}
+@media (max-width: 639px) {
+ .custom-hight{
+   height: 250px;
+ }
+}
 
+@media (max-width: 504px) {
+  .summary-card-title {
+    font-size: 16px;
+    line-height: 1.3;
+    padding: 4px 6px;
+  }
+  .summary-point-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+  }
 
+  .summary-emoji {
+    font-size: 1.5rem;
+  }
+  .summary-point-text {
+    font-size: 15px;
+    line-height: 1.6rem;
+  }
 
+  .summary-viewer {
+    padding-inline: 8px;
+    max-width: 100%;
+  }
 
+  .summary-card {
+    height: 570px;
+  }
 
+  .summary-content {
+    padding-inline: 10px;
+  }
+
+  .summary-scroll {
+    padding-top: 42px;
+    padding-bottom: 86px;
+  }
+
+  .summary-note {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .summary-card-title {
+    font-size: 20px;
+    line-height: 1.3;
+    padding-inline: 4px;
+  }
+
+  .summary-point-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .summary-emoji {
+    font-size: 24px;
+    line-height: 1;
+    padding-top: 0;
+  }
+
+  .summary-point-text {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .summary-stack {
+    display: none;
+  }
+  .summary-header-title {
+    font-size: 24px;
+  }
+
+  .custom-flex-col {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 437px) {
+  .summary-card-title {
+    font-size: 18px;
+    line-height: 1.3;
+    padding-inline: 4px;
+  }
+  .summary-point-text {
+    font-size: 14px;
+    line-height: 1.5rem;
+  }
+  .summary-page-padding {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+   .summary-header-title {
+    display: none !important;
+  }
+  .custom-display-block{
+    display: block !important;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .summary-content {
+    padding-inline: 8px;
+  }
+
+  .summary-card-title {
+    font-size: 18px;
+  }
+
+  .summary-point-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .summary-note {
+    padding: 10px;
+  }
+
+  .summary-card {
+    height: 550px;
+  }
+}
+
+@media (max-width: 359px) {
+  .custom-padding-0 {
+    padding: 1px;
+  }
+  .summary-header-title {
+    font-size: 22px;
+  }
+}
+@media (max-width: 341px) {
+  .summary-header-title {
+    font-size: 24px;
+  }
+ 
+
+}

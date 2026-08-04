@@ -90,7 +90,7 @@ const PricingSection = () => {
   return (
     <section
       id="pricing"
-      className="relative overflow-hidden bg-[var(--paper)] py-20"
+      className="relative overflow-hidden bg-[var(--paper)] py-12 md:py-20"
     >
       <div className="container mx-auto max-w-7xl px-6">
         {/* Heading */}

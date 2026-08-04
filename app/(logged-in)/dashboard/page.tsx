@@ -21,7 +21,7 @@ const DashboardPage = async () => {
     <main className="min-h-screen bg-[var(--paper)]">
       <div className="container mx-auto flex flex-col gap-4">
         <div className="px-2 py-12 sm:py-24">
-          <div className="flex gap-4 mb-8 justify-between">
+          <div className="flex gap-4 mb-8 justify-between custom-flex-col">
             <div className="flex flex-col gap-2">
               <h1 className="text-4xl font-bold tracking-tight">
                 Your
