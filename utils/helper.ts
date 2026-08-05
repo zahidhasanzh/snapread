@@ -1,3 +1,5 @@
 export const isDev =  process.env.NODE_ENV === "development";
 
-export const ORIGINAL_URL = isDev ? "http://localhost:3000" : "https://snapread.vercel.app";
+export const ORIGINAL_URL = isDev
+  ? "http://localhost:3000"
+  : "https://snapread-ai.vercel.app";
