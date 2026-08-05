@@ -15,12 +15,8 @@ export const pricingPlans: PriceType[] = [
       "Standard export",
       "Email support",
     ],
-    paymentLink: isDev
-      ? "https://buy.stripe.com/test_3cI00k5vmet35KH7Bt9ws00" : "",
-    priceID:
-      process.env.NODE_ENV === "development"
-        ? "price_1TxVsSJlEeSDaH8jl1BS2zkZ"
-        : "",
+    paymentLink: "https://buy.stripe.com/test_3cI00k5vmet35KH7Bt9ws00",
+    priceID: "price_1TxVsSJlEeSDaH8jl1BS2zkZ",
   },
   {
     id: "pro",
@@ -34,12 +30,8 @@ export const pricingPlans: PriceType[] = [
       "Premium templates",
       "Priority support",
     ],
-    paymentLink: isDev
-      ? "https://buy.stripe.com/test_cNi5kEbTKet36OL2h99ws01" : "",
-    priceID:
-      process.env.NODE_ENV === "development"
-        ? "price_1TxVsSJlEeSDaH8jLgaFovFq"
-        : "",
+    paymentLink: "https://buy.stripe.com/test_cNi5kEbTKet36OL2h99ws01",
+    priceID: "price_1TxVsSJlEeSDaH8jLgaFovFq",
   },
   {
     id: "business",
@@ -54,12 +46,8 @@ export const pricingPlans: PriceType[] = [
       "24/7 Premium support",
       "Early access to new AI features",
     ],
-    paymentLink: isDev
-      ? "https://buy.stripe.com/test_28E00kga00Cd1urdZR9ws02" : "",
-    priceID:
-      process.env.NODE_ENV === "development"
-        ? "price_1TxVsSJlEeSDaH8jBRuxilW8"
-        : "",
+    paymentLink: "https://buy.stripe.com/test_28E00kga00Cd1urdZR9ws02",
+    priceID: "price_1TxVsSJlEeSDaH8jBRuxilW8",
   },
 ];
 
